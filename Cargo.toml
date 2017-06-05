@@ -2,5 +2,8 @@
 name = "damm-rs"
 version = "0.1.0"
 authors = ["Matthias Schorsch"]
+description = "An implementation of the Damm algorithm."
+repository = "https://github.com/mschorsch/damm-rs"
+keywords = ["damm", "algorithm", "checksum", "check", "digit"]
 
 [dependencies]
