@@ -1,6 +1,6 @@
 [package]
 name = "damm-rs"
 version = "0.1.0"
-authors = ["mschorsch <matthias.schorsch@gmx.de>"]
+authors = ["Matthias Schorsch"]
 
 [dependencies]
