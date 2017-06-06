@@ -4,16 +4,16 @@
 //! detects all single-digit errors and all adjacent transposition errors."_ (Wikipedia)
 //!
 //! https://en.wikipedia.org/wiki/Damm_algorithm
-const MATRIX: [[usize; 10]; 10] = [[0, 3, 1, 7, 5, 9, 8, 6, 4, 2],
-                                   [7, 0, 9, 2, 1, 5, 4, 8, 6, 3],
-                                   [4, 2, 0, 6, 8, 7, 1, 3, 5, 9],
-                                   [1, 7, 5, 0, 9, 8, 3, 4, 2, 6],
-                                   [6, 1, 2, 3, 0, 4, 5, 9, 7, 8],
-                                   [3, 6, 7, 4, 2, 0, 9, 5, 8, 1],
-                                   [5, 8, 6, 9, 7, 2, 0, 1, 3, 4],
-                                   [8, 9, 4, 5, 3, 6, 2, 0, 1, 7],
-                                   [9, 4, 3, 8, 6, 1, 7, 2, 0, 5],
-                                   [2, 5, 8, 1, 4, 3, 6, 7, 9, 0]];
+const MATRIX: [[u8; 10]; 10] = [[0, 3, 1, 7, 5, 9, 8, 6, 4, 2],
+                                [7, 0, 9, 2, 1, 5, 4, 8, 6, 3],
+                                [4, 2, 0, 6, 8, 7, 1, 3, 5, 9],
+                                [1, 7, 5, 0, 9, 8, 3, 4, 2, 6],
+                                [6, 1, 2, 3, 0, 4, 5, 9, 7, 8],
+                                [3, 6, 7, 4, 2, 0, 9, 5, 8, 1],
+                                [5, 8, 6, 9, 7, 2, 0, 1, 3, 4],
+                                [8, 9, 4, 5, 3, 6, 2, 0, 1, 7],
+                                [9, 4, 3, 8, 6, 1, 7, 2, 0, 5],
+                                [2, 5, 8, 1, 4, 3, 6, 7, 9, 0]];
 
 /// Calculates the checksum.
 ///
@@ -25,20 +25,19 @@ const MATRIX: [[usize; 10]; 10] = [[0, 3, 1, 7, 5, 9, 8, 6, 4, 2],
 /// let number = "572";
 /// assert_eq!(encode(number), Some(4));
 /// ```
-pub fn encode(number: &str) -> Option<usize> {
-    let mut interim = 0;
+pub fn encode(number: &str) -> Option<u8> {
+    let mut interim = 0u8;
     for c in number.chars() {
-        match c.to_digit(10) {
-            Some(_) => {
-                // UTF-8
-                // '0' -> 30 (hex) -> 48 (decimal)
-                // '1' -> 31 (hex) -> 49 (decimal)
-                // ...
-                let index = c as usize - 48;
-                interim = MATRIX[interim][index];
-            }
-            _ => return None,
+        if c.to_digit(10).is_none() {
+            return None;
         }
+
+        // UTF-8
+        // '0' -> 30 (hex) -> 48 (decimal)
+        // '1' -> 31 (hex) -> 49 (decimal)
+        // ...
+        let index = c as usize - 48;
+        interim = MATRIX[interim as usize][index];
     }
 
     Some(interim)
